@@ -154,4 +154,4 @@ as an argument or in a prompt you will get a file not found error. If you click
 a long name from windows explorer the program uses the equivilent 8 by 3
 MSDOS file name.
 
-Send bug reports to n8kl@mindspring.com.
+Send bug reports to atti01@users.berlios.de.
