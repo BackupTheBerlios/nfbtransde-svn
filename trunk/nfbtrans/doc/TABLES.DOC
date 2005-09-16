@@ -1,0 +1,184 @@
+These tables were provided by several users of nfbtrans.  I only know english,
+so I have no way or interest in verifying their accuracy.  In other words, if
+they don't work as you think they should, fix them yourself and send the improved
+tables to inge@netcom.com for inclusion in the next version.
+
+These tables were provided by Oleg Shevkun (OVS@DEXNET.LONESTAR.ORG;
+74403.212@compuserve.com).
+
+this document describes some of the alternative tables, now available for
+NFBTRANS.
+
+The present version of NFBTRANS comes with these table files:
+
+
+				BRAILLE.TAB
+
+This is the standard table of English Braille, and it is used by default.
+If you want your Braille output without any capitalization signs (the way it
+is in British Braille), add line
+	  CA=|
+
+anywhere in the table.
+
+
+			  RUSSIAN.TAB
+
+This table produces standard Russian Braille output.
+
+The Cyrillic (Russian) alphabet consists of 33 characters, and these need to
+be assigned positions in the ASCII table.  here is a table that will permit
+the brailling of ASCII files created in the so called "Alternative"
+ASCIIzation system, standardized in codepage 865. This will allow working
+with files created by all major DOS-based Russian word-processors, which is
+the absolute majority of documents you may ever come across.  Other popular
+formats, not supported by this table, are codepage 1251 (the standard
+Russian character set in WINDOWS), KOI7 and KOI8 (two formats, normally used
+on the Internet). If you ever need a table to work with these formats,
+please contact us.
+
+NFBTRANS may have problems in number/letter combinations.  Thus, if a number
+is followed by a letter, it will put no letter sign before the letter.	You
+will have to do it manually.  As an alternative, you may edit your text
+before brailling, so that such letter/number combinations do not occur.
+Thus, if there is a point 2B in the text, just put the B in
+parenthesis, and then it will be treated correctly.
+
+The capital sign in Russian is dots 45.  However, it is used so rarely, that
+we decided not to incorporate it into the table altogether.   Thus, if for
+some reason you want to capitalize a word or two (which is very unlikely),
+then you can insert the capitalization sign manually. However, the table is
+written in such a way, that it will put capitalization sign as dots 46 in
+any Latin-letter text it comes across.	In other words, if you translate a
+mixed text in Russian and English, the Russian portion will have no
+capitalization marks, and the English version will have dots 46 to represent
+capitalization.  Of course, no contractions will be used in the English
+section.  This practice, although somewhat unusual for Americans, is in full
+accordance with the norms of Russian Braille.
+
+Please remember that the question mark in Russian (and, for that matter, in
+all other languages but English) is dots 26.
+
+
+				SPANISH.TAB
+
+A few years ago, a new Braille standard was accepted in Spain.	It is this
+new standard that our Spanish tables are attempting to follow.	However,
+because at the time of writing the author didn't have a systematic manual on
+Spanish Braille, there may be a few changes needed to these tables.	If
+you find any incorrect braillings with them, please let us know.
+
+
+			       ESPERANT.TAB
+
+This  table will braille documents in the international auxiliary language
+Esperanto.  Esperanto has five circumflexed consonants (c, g, h, j, and s
+can all be circumflexed) and an accented vowel (u with breve).	The
+Fundamento, which forms the official basis for the language, suggests that
+printers that lack a circumflex can use `h' (ch, gh, hh, etc.).  This is,
+however, not a completely satisfactory solution for computers, and
+introduces unnecessary lexical ambiguity.  Therefore, it is not supported in
+our table.
+
+Two solutions are now in use:
+
+The European Computer Manufacturer's Association Standard ECMA-94 contains
+four 8-bit Latin alphabets to cover a variety of European languages.  Latin
+alphabet 3 covers Esperanto (as well as nine other European languages).
+This alphabet also forms the basis for the international standard coding ISO
+8859/3 (LATIN-3).  This eight-bit coding is probably the best `canonical'
+representation for the storage of Esperanto text, and so we've chosen to
+support it.  The problem is that the Internet mail protocol is currently
+only able to transmit 7-bit ASCII. The best ASCIIzation for communication
+purposes is to represent the circumflex by an X after the character to be
+accented.	This method is in common use on the Internet.  And, because
+it doesn't conflict with the other method, we could incorporate it into the
+same table.  If your text is transcribed in any other method, you'll have to
+use a conversion program on it first.
+
+For more information on Esperanto, please contact
+Esperanto League of North America
+ Box 1129
+ El Cerrito, CA  94530
+Phone: 1-800-828-5944
+E-mail: ELNA@NETCOM.COM
+
+For a free E-mail Esperanto-course, write to MARKO.RAUHAMAA@TEKELEC.COM.
+
+
+				GERMAN.TAB
+
+Our German table will produce German Braille with most commonly used
+contractions.  To the Germans, this is an equivalent of Grade I (though they
+don't use the term).  A Reader should be familiar with the basic
+contractions for groups of letters.  If you would like no contractions used,
+you should put the command ~1 at the beginning of your German documents.
+
+In the future, we may come up with the complete table of German Braille to
+handle Grade II.  Please let us know whether you would be interested in such
+a project.  Also, please let us know your suggestions concerning this table.
+
+
+			   GNT.TAB; BHS_BHM.tab
+
+These two tables will braille ASCII files, created by the Online Bible
+software from Online Bible, Inc.  Among other things, the program contains
+full Hebrew and Greek texts of the Bible.  These can be printed from the
+program to an ASCII file and then processed by NFBTRANS. GNT.TAB will
+process Greek New Testament output, while BHS_BHM.TAB will work with the
+Hebrew Old Testament.
+
+The main limitation of the Online Bible is, that its Greek text appears
+without any accents, breathing marks or punctuation.  Its Hebrew Old
+Testament is a consonantal text, without any marks.  If you find any
+software that will print a better version of the Biblical texts in the
+original tongues, please let us know, and we'll work on a translation table
+for it.
+
+Another problem is, that the Online Bible inserts English book titles into
+the text it prints, and they get corrupted in Braille when the language
+tables are used.  To work around the problem, you should do some formatting
+to your documents before translating them. Put this command in front of any
+English text in the files created by the Online Bible:
+
+    ~-tf=braille.tab
+
+Put this command before any Greek text:
+
+     ~-tf=gnt.tab
+
+Put this command before any Hebrew/Arameic text:
+
+      ~-tf=bhs_bhm.tab
+
+With the exception of limitations outlined above, NFBTRANS use follows the
+system found in the Greek New Testament, produced in Braille by National
+Braille Association.
+
+Wit the exception of limitations outlined above, NFBTRANS follows the system,
+used in the Hebrew Bible, published in Braille by Jewish Braille Institute
+of America.  Note, however, that no special signs are preserved in the
+Online Bible text; this affects the representation of several letters with
+the Dagesh, for which we have chosen representations that are closer to the
+Latin alphabet. The letters affected are B (Bet), K (Kaf), P (Pe).
+
+Before using the Hebrew version, log to the directory that contains the
+files (default is C:\BIBLE\BHS_BHM) and type these two lines:
+
+       REN VERSION.DAT VERSION.VGA
+       REN VERSION.CGA VERSION.DAT
+
+This will change the behavior of the
+program, so that your Hebrew text will be printed from left to right (and
+this is what you need for Braille embossing).  If you ever want your text to
+go from right to left, just restore the original file names.
+
+In both the Greek and Hebrew parts of the program, you should tell it not to
+format the text for printing on a page.  This is done from the window, which
+is presented to you whenever you choose "Passage Print".
+
+Please refer to the documentation for Greek and Hebrew modules of the Online
+Bible for more hints.
+
+For more information on the Online Bible, call (800) 243-7124.
+

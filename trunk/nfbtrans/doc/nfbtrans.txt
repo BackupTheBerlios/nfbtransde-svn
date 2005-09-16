@@ -1,0 +1,1284 @@
+braille translator user documentation release 7.74 november 4, 2002            i
+ 
+                               table of contents
+part 1: introduction ......................................................... 1
+part 2: requirements ......................................................... 1
+part 3: getting started ...................................................... 1
+part 4: command line options ................................................. 3
+part 5: formatting commands ................................................. 13
+part 6: external format language ............................................ 19
+part 7: braille considerations .............................................. 21
+part 8: changing the translation table ...................................... 22
+part 9: other considerations ................................................ 23
+                              part 1: introduction                             1
+     the nfb braille translator is a computer program designed to easily and
+quickly produce grade 2 braille from text entered using a word processing
+program. the program has been designed to be as easy to use as we can make it.
+most operators can start producing grade 2 braille with half-an-hour practice.
+there are a number of commands that enable you to format the braille output for
+almost any purpose.
+     braille, by its very nature, does not have the same format as print text. a
+typical braille page consists of twenty-five lines, each of which is forty
+characters long. unlike the standard printed page, most braille documents do not
+utilize either a top or bottom printed margin. in other words, on a typical
+braille page, all twenty-five lines are used for text. in some cases, the first
+line is used for a running header. in braille produced by this program, with the
+exception of braille page 1, the upper right corner of the page will contain a
+braille page number. see interpoint printing described later. also see the fp=
+option if you want to number page one.
+     blank lines in braille text are kept to a minimum. in contrast to many
+printed formats, braille paragraphs are not separated by a blank line. a braille
+paragraph is denoted by an indented line which starts in cell three. a blank
+line in braille might well be used to offset large portions of quoted text or to
+precede a centered heading.
+     by using advanced formatting it is possible to create special format
+documents with the nfb braille translator. there are frequently requirements to
+produce documents that present information in outline format, for example, a
+restaurant menu or a schedule.
+     
+                              part 2: requirements
+     in general, you will need a computer, an embossor, and word processing
+software to use this program. you will need to be familiar with your operating
+system and your word processing system. please be familiar with the various
+copying and setup procedures appropriate to your system.
+     you must also have a brailling device. this can be any embossor or
+paperless braille device that uses the triformation led-120 coding scheme. these
+include the triformation series, the thiel, the ted, the cranmer modified
+perkins, the romeo, juliet, and the braillo.
+     you or your hardware supplier should be sure that the embossor is properly
+connected to the computer and is working. the braille translator expects the
+embossor to be connected to the default list device. because the computer could
+have more than one print device, the operating system provides ways to change
+the default device path. you can redirect the standard list output using the
+mode command, for example, mode lpt1:=com1: .
+     you can use any word processor to create the file to be translated. it is
+important to save the file in ascii however. lines may be of any length and can
+be terminated by cr/lf or lf.
+     
+                            part 3: getting started
+     1. connect embossor.
+     2. include the location of nfbtrans in the path in your autoexec.bat file.
+this allows nfbtrans to be run from any directory. nfbtrans looks for
+nfbtrans.cnf in three places. first, you can define an environment variable
+nfbtrans to point to the directory containing nfbtrans.cnf. in dos use set
+nfbtrans=c:\nfbtrans. second the program searches in the current directory.
+third, the program location is used in msdos or /usr/local/lib in unix. if
+nfbtrans.cnf is found that directory is used to search for all table files as
+well as the hyphenation dictionary. in other words, nfbtrans.cnf and braille.tab
+must be in the same directory.
+     3. after the prompt, type nfbtrans, for example:                          2
+     (prompt) nfbtrans nfbtrans then displays version and copyright messages
+depending on the contents of your nfbtrans.cnf file.
+     4. the program will then ask a series of questions depending on
+nfbtrans.cnf. many questions can be eliminated by placing options in
+nfbtrans.cnf. each question except the name of the file to be translated will be
+followed by a standard default response. to select the default, simply press the
+return. the questions and defaults are as follows:
+     please select
+     1 to translate a text file, 2 to emboss a file that has been translated 3
+backtranslate a grade 2 file choice? 1
+     you may either translate a file that you have entered with a word
+processing program, emboss a file that has already been translated or translate
+a grade 2 file back to text. select
+     source file name?
+     enter the name of the file you want to translate, such as b:letter.txt or
+a:report. wildcard characters may be used to specify several files. if multiple
+files are specified, they are sorted and processed in alphabetical order. if the
+output is sent to a file and the on= option is used, a separate output file is
+created for each input file. otherwise the output for files specified by the
+wildcards will be stored in one large file. files beginning with the @ "at" sign
+are assumed to contain lists of files to be translated. you should put only one
+file name per line and wildcard characters are allowed in the list. blank lines
+are ignored.
+     enter number of spaces before left margin of source file (usually 1) 1
+     use another number if the document you want to translate does not fully
+left justify. enter the column of the beginning of the left margin.
+     enter number of braille cells to emboss on a line (usually 40) 40
+     you can specify an alternate line length, such as 42 cells. just press
+return to use default.
+     display source text (y/n): n
+     if you do not want to see the source text as it translates or embosses,
+enter n.
+     display translated text (y/n): y
+     if you do not want to see the translated text as it translates or embosses,
+enter n. most sighted people like to see it.
+     number of lines per page? 25
+     enter the number of lines per braille page, usually 25. press return to use
+default.
+     number of line skips between pages (99-ff, 999-vt)? 99
+     enter the blank lines between pages to get to the top of the next page. if
+you want to use the form feed command (ff), enter 99. the thiel embossor works
+well with the ff command. if you want to use the vertical tab (vt), enter 999.
+the old triformation led-120 may require the vt depending on the version of the
+embossor you have. 0 tells nfbtrans to output blank lines to go to the top of
+the next page. most embossors use the form feed--99. press return to use
+default.
+     please select 1 to translate and store in a file or 2 translate and emboss
+immediately. choice? 2
+     select the first option if you want to store a translated file for future
+embossing. while the translator is fast, it is even faster to simply emboss a
+file that has already been translated. if you only need one copy, select option
+2 and emboss the file immediately. see sp= for backround embossing.
+     enter starting page: 1
+     normally, enter a 1 to start at the beginning. if you want to start further
+into the document, enter the braille page number at which you want to start. you
+may enter the ending page at this time by separating it from the starting      3
+page with a dash, comma, or space, for example 1 20. if ip=1 is in effect, the
+starting page must be odd. if not, nfbtrans subtracts 1. you can specify roman
+numeral pages by placing a lowercase r after the page number. entering 3r-5r
+causes the program to output roman pages 3-5. entering 3r-15 outputs roman page
+3 and later and arabic pages 1-15. place a lowercase a after a page number to
+indicate an arabic page range.
+     enter last page to emboss:9999
+     normally, enter a 9999 to emboss the entire document. if you want to emboss
+fewer pages, enter the braille page number at which you want to stop.
+     number of copies: 1
+     enter the number of copies you want.
+     
+                          part 4: command line options
+     syntax: nfbtrans [option 1] [option 2] [...] file1 file2 ... options are of
+the form xx=value for example pw=43 will set the page width to 43. options may
+be specified in several ways: 1. on the command line, 2. in nfbtrans.cnf, 3. in
+any table file, 4. in the file being translated, 5. in an external format
+language file, and 6. in initialization strings. most options may be used in all
+six places but several cannot. for example the initialization options i0= can
+only be used in nfbtrans.cnf. the program reports an error if you use an option
+where it is not allowed.
+     note that the case of the two-letter option does not matter but the case of
+the option string itself may be significant, especially in unix.
+     nfbtrans processes all options in nfbtrans.cnf, then any options on the
+command line. next it processes any options in the table file. the configuration
+file is read again for each subsequent file if more than one file was specified.
+the table file may or may not be re-read depending on the file being translated.
+     note that several options have integer arguments which require an
+understanding of how to set or clear bits in the integer. the behavior of these
+options is determined by which bits are set. an integer has sixteen bits, bit
+zero through fifteen. b0 corresponds to 1, b1 to 2, b2 to 4, b3 to 8, b4 to 16,
+b5 to 32, b6 to 64 and so on. for example if you need to set bits 1 and 3 for an
+option the number you would use is 2 plus 8 equals 10. bits may also be set bya
+list of bit numbers separated by commas. for example if you want to set bits 0,
+2, 4, 5, and 8 you could use the syntax sm=0,2,4,5,8 rather than figuring out
+the corresponding integer.
+     some options require a string of characters as argument. these characters
+may be enclosed in double or single quotes. quotes are not necessary unless you
+want the option string to contain spaces.
+     the last type of option requires one character as an argument. extra
+characters are ignored. a space character is assumed if nothing follows the
+equal sign.
+     list of options:
+     ac=auto_center = 0/1 causes nfbtrans to examine each input line to see if
+it is centered. if it is, the corresponding output will be centered. this option
+can be followed by formatting commands, default is ~2s ~c which causes a blank
+line to be placed before the centered line. note that it is possible that some
+lines may be automatically centered when they shouldn't be. also use the rp=
+option to remove page numbers from the input lines.
+     be=freq,duration outputs a beep. this can be used for debugging, for
+example, when a particular table gets loaded. be=440,500 beeps the speaker at
+440hz for half a second.
+     bl=string outputs string instead of a space for blank lines.
+     bm=book_mode tells nfbtrans how to handle textbook page breaks using the ~b
+formatting command. if bit zero is set the program will put a line of dashes
+before the ink-print page number. if bit one is set nfbtrans will put the      4
+print page in the upper right and the braille page in the lower right corner of
+the page. if bit two is set and your document has a table of contents where
+nfbtrans generates page numbers, both the print and braille page numbers are
+output. if bit three is set a toc header will be put before the beginning of the
+toc and at the beginning of each subsequent toc page. the toc header has two
+lines each with three columns:
+title print braille
+blank page page
+and then a blank line. many braille magazines have this type of toc. bit three
+implies bit two. (see the tc= option described later).
+     bp=n puts the beginning of a textbook page on the next braille page if
+within n lines of the bottom.
+     ca=capital_marks defines how upper case words or letters are brailled.
+default is ca=,|,,|; meaning a single uppercase letter is preceded by a dot 6,
+while multiple uppercase letters by two dot 6's and that the letter sign is dots
+56. note that a vertical bar separates the strings.
+     cf=filename specifies another name for nfbtrans.cnf.
+     cl=nn specify the maximum length of lines during centering. maximum value
+is page width minus 6. default is 32.
+     co=nn number of copies example co=3 use co=0 to always be prompted for
+number of copies.
+     cs=nn specifies number of characters your printer can print per second. it
+is used to estimate embossing time before file is sent to the dos print command.
+estimates are given only if 2 minutes or more. default is cs=40.
+     cu=char specifies the currency character used with the manual tilde f
+command.
+     db=0 or 1 display braille 0 no 1 yes -1 to be prompted.
+     de=delay specifies delay in ms between lines of embossed output. if
+handshaking is working properly use de=0.
+     dm=message outputs message to standard error. for example the line
+dm="reading configuration file" could be placed in nfbtrans.cnf to indicate that
+it is being read.
+     ds=display source 0 for no 1 for yes -1 to be prompted.
+     dv=x,y puts lines of dots 2-5 on lines x and y. these lines can then be
+used to fold the page into a letter. use dv=0,0 to terminate this option.
+     ef=n default is ef=1 if bit 0 is set, nfbtrans will process the
+corresponding .efl file if it exists. if the file exists and there is a syntax
+error, an error message is displayed and the program aborts. if bit 0 is clear,
+the program will not look for a .efl file. if bit 1 is set, the program will
+abort if the .efl file is not found. if bit 2 is set, the user is notified when
+a .efl is processed.
+     em=expected_mode tells the program which translation mode is used with a
+given table. this prevents users from using back.tab when translating to a grade
+two file and braille.tab when back translating.
+     et=0/1 default is 1 tells nfbtrans to expand tab characters to the next tab
+stop. some editors can be set to replace whitespace characters with tabs to
+reduce the size of a file. if kc=1 is in effect, tabs are are not expanded.
+     ex= extension_definition. you can tell nfbtrans to take certain actions
+depending on the extension of the input file. the extensions are followed by
+"equal" and then by a number. for example ex==0c=1h=1pas=1brl=2 says that files
+with no extension use strings from the i0= option and .c .h and .pas files are
+associated with i1 and brl i2. you can tell nfbtrans to skip files with certain
+extensions using '-' as in ex=exe=- the extensions can be in any order and you
+may have several ex= options in nfbtrans.cnf. the program can store up to 45
+extension definitions. the ex= option can also be used to specify the basename
+of a file. if a file has no extension, its name is compared to the ex=         5
+options. for example ex=makefile=1 associates a file named makefile with i1. see
+nfbtrans.cnf for examples. note that this option is case sensitive in unix but
+not in dos.
+     fc=fill_char specifies the character to use as a fill character in a table
+of contents ~f entry. default is a quote character.
+     fp=1 number first page. otherwise do not number first page.
+     fs=format_char specifies the format character, usually tilde. use fs= if
+your document has embedded tilde or carat symbols that are not nfbtrans format
+commands.
+     gd=n sets the minimum number of guide dots that will be output with a ~f
+command. the default is two meaning that if the translated line has less than
+two guide dots, they will be converted to blanks.
+     gm=0/1/2 sets graphics mode default is gm=0. normally nfbtrans ignores
+extended graphics characters, characters whose ascii value is greater than 127.
+if gm=1 the high bit is removed. if gm=2 the character is left intact. place the
+appropriate entries in braille.tab if you want to expand these characters.
+nfbtrans will report an error and abort if a graphics character is used but not
+defined in the table.
+     hb=rejected_word_file specifies the name of the file to store rejected
+words you don't want added to the dictionary. default is hb=bad.dic.
+     hc=0/1/2 tells the program not to translate ham calls. if set to one, calls
+can be in any case, if set to two only calls in upper case will not be
+translated.
+     hd=hyphenation_dictionary specifies the name of a hyphenation dictionary
+file. this file should contain a lexically sorted list of uppercase words with
+dashes where the word could be hyphenated. when a word is too long to fit on the
+current line, the dictionary is searched to see if part of the word will fit.
+use the vertical bar no translation character if you don't want certain split
+words contracted. for example num-|ber prevents the program from using the be
+sign. there is no limit on the size of the hyphenation dictionary. large
+dictionaries will slow the operation of nfbtrans but not as much as you might
+think. the program stores the start of words beginning with b, c, d ... for
+example if nfbtrans searches the dictionary for the word youngster, it starts
+from the beginning of the file if it is the first search. while searching, it
+stores the position of the b, c ... through y words. the search is unsuccessful
+if a word is found that is greater lexically than youngster. on a second search
+for the word helper the program already knows where the h words start. if you do
+a third search for a word beginning with z, the program starts at the y words
+adding the start of the z words. the dictionary may contain words starting with
+uppercase letters as well as extended graphics characters. nfbtrans operates at
+about two-thirds normal speed with a nine-thousand word hyphenation dictionary.
+you can put the dictionary on a ram drive for a slight improvement. if the first
+character is a slash or the second character of the dictionary file is a colon,
+the program does not use the location of nfbtrans to find the file. there is no
+default hyphenation dictionary, you must use the hd= option to make it active.
+use two double or single quotes to disable the hyphenation dictionary. the
+dictionary is not searched for computer braille words i.e. grade zero. (see the
+hm= ht= and rw= options described later.)
+     there are three ways to add words to the hyphenation dictionary: 1. use a
+text editor to insert the new word in the proper place. 2. use the hm= option to
+automatically insert new words read from the file being translated, and 3. use
+the ht= option to automatically insert words entered from the keyboard.
+     the program does a consistency check every time you update the dictionary.
+it compares the file's date with the date stored in the first line of the file.
+if the dates do not agree, the program verifies all words are in uppercase and
+that they are sorted properly. the program inserts the current date in the     6
+first line of the file.
+     note for unix users. nfbtrans will automatically remove carriage returns
+and re-write the dictionary file.
+     hk=1 enables hot keys meaning you don't need to press return when entering
+a single digit or answering y/n.
+     hl=min_length specifies the minimum length of words considered for
+hyphenation; default is four.
+     hm=hyphen_mode specifies several options concerning word hyphenation. bit
+zero activates the hyphenation dictionary. the hd= option automatically sets bit
+zero leaving the other bits unchanged. in other words, you can temporarily
+disable hyphen dictionary searches after the hd= option by clearing bit zero and
+enable dictionary searching later by resetting bit zero. note that if only bit
+zero is set, words with leading or trailing punctuation will not be hyphenated.
+bit one attempts to split words containing dashes. this is true regardless of
+whether the hyphenation dictionary is active. bit two will attempt to split
+words containing leading punctuation. (see the lp= option described later). bit
+three attempts to split words with trailing punctuation marks. for example the
+word number followed by a comma and a quote is searched by removing the comma
+and quote and if split, they are appended to the split word. (see the tp= option
+described later). bit four outputs words that are split to standard error. bit
+five outputs words that were not found which can later be added to your
+dictionary. if you follow the number with a character string, the output from
+this option will be sent to that file rather than standard error. for example
+hm=31h:file.txt stores the output in a file called file.txt. if the file already
+exists, the output is appended. setting bit six tells the program to add new
+words to the dictionary. this is done as follows: when a word is encountered
+that is not in the dictionary you are asked whether you want to add it. if no,
+the rejected word is placed in a file named bad.dic. if yes, you will be
+prompted for the new word as it should appear in the dictionary. press escape to
+end this mode. the program inserts the new word in the proper place. you must
+have enough disk space for a temporary copy of the dictionary. if bit fifteen is
+set consistency checks on the hyphenation dictionary are not done automatically
+when the dictionary is updated.
+     hn=n specifies how often a consistency check is done on the dictionary when
+bit six is set with the hm= option. default is hn=5.
+     hp=n specifies the number of hyphenated words allowed per page, default is
+99.
+     ht=hyphenation dictionary is used to test consistency of your hyphenation
+dictionary file. the file is examined to make sure all words are in uppercase
+and that they are sorted properly. if no errors are found, you are prompted to
+enter a word or press enter to exit. if the word is found the line number of the
+word in the dictionary is shown. if the word is not found the line number where
+the word should be placed is shown. the program then asks if you want to insert
+the word. if yes, you are prompted for the word as it would appear in the
+dictionary and it is inserted. the program automatically tests a dictionary file
+when the hd= option loads a file whose date has changed since it was last loaded
+with an hd= option.
+     hx=max_consec_hyphens specifies the maximum number of consecutive
+hyphenated words, default is three.
+     i0= through i9= i: i; i< i= i> i@ and, ia= through ie= specifies a set of
+three strings that can be associated with a given extension defined with the ex=
+option. the strings are pre_init, post_init, and format_char. pre_init is
+processed before the file is embossed or stored and post_init after. these
+strings may contain format commands to invoke grade two, change page length and
+so forth. escape sequences can also be sent. for example, if you want to use the
+ca= option with i0= option, use i0=~-ca=,\124,,\124;|| the backslash124 is a   7
+way of using the vertical bar for an option within an option. the strings are
+separated by a vertical bar. the format_string specifies characters considered
+format characters, usually tilde or carat. .c files have tilde and carat
+characters as part of the program text so format_string should be empty. for
+example i0=pre_init|post_init|format_chars. see sample nfbtrans.cnf for a real
+example. the first init string is processed as soon as the input file is entered
+which means you can customize the prompts you get for a given extension. the
+string is processed before the output file is opened so any attempt to write to
+the unspecified file will cause an error.
+     if=string. this option tells nfbtrans to ignore the format commands given
+in string. for example if=0123 will ignore all (tilde) 0 1 2 and 3 formatting
+commands. these are the only commands that will be ignored.
+     ip=n specifies interpoint mode printing on both sides of the page. even
+page numbers are not printed. printer advances to beginning of next odd page
+after file is printed. use ip=2 to tell printer to advance an entire blank page
+so you can reach a perforation below the bottom page. note that if sp=1 is in
+effect the embossor only advances to the next page rather than skipping an
+entire blank page. otherwise there would be a blank page between each file.
+     it=char specifies the character used for italics, the default is underscore
+which translates to dots 46 in braille.tab.
+     kc=0/1 if 1 do not convert control characters to spaces.
+     kf=0/1 if used during back translation keeps the format of the grade 2
+file. each line of the ascii output corresponds to one line of grade 2 input.
+braille page numbers are not removed. this option should normally be used in the
+back.tab table before other options.
+     l0=string. this option removes the space after any character in "string."
+for example l0=,; removes spaces after words ending in a comma or semicolon. if
+there isn't enough room for the joined word, the second word is placed on the
+next line. this option is used in some of the foreign language tables.
+     l1=- joins a word containing a single dash to the preceding word. this
+option is normally used only in certain foreign language tables.
+     l2=word_list joins a type 12 word to the next word if that word is in the
+list. words in the list are separated by the vertical bar. default is
+l2=de|een|het. the list may contain up to nine words. this option was requested
+for dutch braille.
+     l3=0/1 modifies the operation of type 9 words in the translation table such
+that leading or trailing punctuation and the first letter being uppercase causes
+the word to be translated. normally, leading or trailing punctuation causes the
+word not to be translated. this is used in the grade 2 spanish table.
+     lb=n is used in conjunction with the ~y list format command. if set to one
+the program advances to the next page so the input line will not be on two
+pages.
+     le=file loads an external format language file. the program looks in the
+current directory and then in the same directory as nfbtrans.cnf. errors are
+reported according to the ef= option. the contents of any previously loaded .efl
+file are lost. this allows you to have a global .efl file that will always be
+loaded for a given extension.
+     lf=loadfile use the lf=loadfile option to emboss a large document
+consisting of several files. the lf= option cannot be used on the command line
+or in nfbtrans.cnf. the lf= option can only be invoked with a format command so
+formatting must not be disabled. for example if you have your document broken in
+to files ch1.fmt and ch2.fmt, place tilde-lf=ch2.fmt as the last word of
+ch1.fmt. this causes nfbtrans to continue translation by reading ch2.fmt. page
+numbering and so forth continues as if only one file were being translated.
+     li=string will append "string" to the last word of each input line. the
+string is appended after translation.                                          8
+     lm=left_margin use lm=0 to be prompted for left margin.
+     lp=leading_punctuation specifies up to seven characters to consider as
+leading punctuation if b2 is set in the hm= option. by default only the left
+parenthesis is considered leading punctuation.
+     lr=0/1 default is 1 tells nfbtrans to automatically generate a letter sign
+in words such as e-mail and u-turn i.e. for any word with a letter followed by a
+dash.
+     ls=n lines to skip between pages. use ls=-1 to always be prompted for this.
+ls=0 is allowed now. i like printing 27 lines per page. my juliet automatically
+advances over the paper fold after the 27th line. no formfeeds are output if
+ls=0. use ls=99 for formfeeds.
+     lt=0/1/2/3 specifies how the output lines are terminated. lt=0 terminates
+lines with cr/lf which is normally used with dos. lt=1 outputs a single carriage
+return after each line. this is useful when transferring files to a braille
+lite. lt=2 outputs a single linefeed after each line and is the default for
+unix. lt=3 outputs a space character which means the output will be a single
+line.
+     m3=x can be used to set the default grade 3 modifier when a simple ~3
+command is used. for example m3=1 would cause a ~3 command to output the dot 4,
+5 , 45 and 456 grade 3 contractions.
+     ma=0/1/2/+/- the math options are an attempt to ease the brailling of
+mathematical equations. see the ms= and mt= options described later. ma=+ loads
+the math table. the math table remains in effect until a ma=- or tf= is
+encountered. the math table can contain any rules you want. if you would like to
+write a correct nemeth code table, i would be happy to include it with nfbtrans.
+     ma=1 loads the math table if the program thinks a word is an equation. the
+default table will be reloaded if a word is deemed not to be an equation. ma=2
+also outputs "equations" to standard error. the ma=+ option does an ma=0. see
+the ms= option described later.
+     mf=menu_file allows you to customize the nfbtrans menus. (see the file
+menu.cnf for an example. this option may be used on the command line or in
+nfbtrans.cnf.
+     ms=math_symbols is used to determine if a word causes the math table to be
+automatically loaded if ma=1 or ma=2 is in effect. the default is ms==<> a word
+with any of these symbols that also contains a digit is considered an equation.
+i'm still thinking of how to do this more reliably.
+     mt=math_table default is mt=math.tab. this option allows you to change the
+name of the math table.
+     nc=1 skip copyright message.
+     ns=string specifies the characters nfbtrans uses for the number sign and
+decimal point. the default is ns=#. for american braille.
+     ob=option_mask resets permission mask for the given option. each option has
+an associated integer which specifies when it may be used. b0 allows the option
+on the command line, b1 in nfbtrans.cnf, b2 in table files, b3 in a format
+command, b4 in an an .efl file, b5 in an initialization string, b6 the option
+has integer arguments rather than string arguments, b7 unused, b8 indicates
+option is to be ignored, b9 indicates the option has a single character as
+argument. for example, the integer associated with the i0 option is two, which
+means it may only be used in nfbtrans.cnf. the option ob=i0=6 would also allow
+this option in a table file. if b8 is set as in ob=fp=256 all future fp= options
+will be ignored until b8 is cleared. examine the source code if you have any
+further questions.
+     oc=0/1/2/3 selects output case default is uppercase. if bit zero is set
+output will be uppercase. if bit one is set output from grade zero or computer
+braille will be uppercase if bit zero is set. default is oc=3 meaning all output
+in uppercase.                                                                  9
+     od=output_directory specifies the directory where output files are stored.
+if the output file includes a path, the output directory is not used. don't put
+a slash or backslash at the end of the directory name.
+     of=file specifies a file where all options and formatting commands will be
+stored.
+     on=n can be used to automatically generate an output file name. setting bit
+zero generates an output name during forward translation. bit one for back
+translation. bsetting bit two stores the output in the same directory as the
+input file rather than the current directory. the output file name is
+constructed from the input name by removing any extension and appending .brf for
+forward or .txt for back translation. this option eliminates the prompt for an
+output file name which is helpful if program is run from windows. see the
+explanation in readme.txt. it's not always obvious what the current directory is
+in windows. use the od= option to specify an output directory. the od= option
+won't work if bit two is set and the output file name contains a colon or
+backslash.
+     ow=1 if an output file is created, you will not be warned if the file
+already exists.
+     pa=n where n is an integer. use this option if your brailler and
+synthesizer are connected to the same port. pa=10 causes the program to pause
+and beep once a second for 10 seconds giving you time to switch between your
+synthesizer and brailler. this only happens when you emboss, not when you just
+write to disk. nothing will be written through the bios to the screen while you
+are embossing. pressing any key during the pause will cause the program to wait
+until another key is pressed before continuing with the pause sequence. if
+escape was pressed the program aborts and returns to dos. when embossing is
+complete the program beeps and waits for a keypress before continuing. this
+prevents the dos prompt or other program output from being brailled. the pa= and
+sp= options cannot both be used. the last one given is used.
+     pd=1/2 and pf=1 causes date and filename to be printed on the first line of
+the first page of your document. file.txt 05/30/93 14:56 is the format. use pf=2
+to print just the file name rather than the whole path. for example with pf=2
+nfbtrans c:\dir1/dir2/myfile.txt will be embossed as myfile.txt on the first
+line of output. use pd=2 to print the date without the time.
+     pe=ending_page -1 to always be prompted.
+     pl=nn page length default pl=25
+     pm=n where n is between 1 and 5 specifies the minimum number of spaces
+between a page number and the text to the left. the default is 2.
+     pn=prn print device for your brailler if sp=0. by default, pn=prn.
+     ps=page_start ps=-1 to be prompted.
+     pw=page_width default pw=40.
+     qm=0/1 sets quiet mode. if qm=1, page number progress messages are not
+output.
+     rc=command is used to execute a formatting command in any table or in
+nfbtrans.cnf. for example the option rc=~u will turn page numbering off.
+     rf=run_file can be used to run another program at a specified point during
+translation. percent i will be replaced by the input file and percent o by the
+output file. for example, rf="myprog %i %o" will run myprog with the input and
+output files as parameters.
+     rp=n instructs nfbtrans to remove braille page numbers from the input file
+before translation. setting b0 causes the program to remove only arabic page
+numbers. the input text is scanned to determine the page width. if the line has
+a word conforming to a plain or grade 2 page number all the way to the right and
+it is preceded by at least two spaces, the word is removed. setting b1 will
+check all lines for page numbers regardless of their length. b2 also removes
+print page numbers i.e. grade two page numbers preceded by a letter. b3       10
+removes page numbers indicating the beginning of a print page i.e. numbers
+preceded by dashes. b4 removes roman numeral page numbers. rp=29 removes page
+numbers from all input lines of the maximum length which is normally what you
+would want.
+     rw=n tells nfbtrans how to treat hyphenated words that appear in the input
+file. a word is considered to be hyphenated if the following is true: 1. the
+last word on a line ends in a dash and the preceding character is a letter and
+the word does not contain other dashes and the word does not contain math
+symbols. 2. the following word starts with at least two letters. 3. the rejoined
+word is found in the hyphenation dictionary. during back translation the
+criteria for considering a word as hyphenated is relaxed so that the word may
+contain math symbols which of course have different meanings in grade 2. if the
+word is not in the dictionary, it is rejoined leaving the dash in between. if
+the dictionary is not open or bit zero is clear, the words are not rejoined and
+will be output as two separate words. if bit one is set, the word does not have
+to be the last word on the line. if bit two is set, any word containing a dash
+is examined to see if it is in the dictionary. if it is, the dash is removed. if
+bit three is set, the rejoined words are output to standard error. if bit four
+is set, the words not rejoined are output to standard error. the output of this
+option will be stored in a file if the integer is followed by a file name, for
+example rw=15h:temp.
+     s0=pre-init string sent to printer if in spool mode. use to tell printer to
+ignore formfeeds. the dos print command appends a ff at the end of each file.
+     sc=spell_file invokes the spell checker. you must use the file spell.dat
+from this archive. the dictionary contains over 116000 words. the program
+searches for the dictionary in the same directory containing nfbtrans.cnf. words
+not found in the dictionary are stored in the file spell.dic in that same
+directory (see the sn= option described later.) the program appends questionable
+words to spell.dic each time it is run. each line of spell.dic contains the
+misspelled word along with the input line number. only the first occurrence of
+the word is stored. you must manually edit your input file to correct any
+spelling errors. you can add or delete words in the dictionary with the program
+dicutil.exe in the file dicutil.zip from
+ftp://ftp.mindspring.com/users/n8kl/dicutil.zip for further information on this
+dictionary, goto www.simtel.net and go to the msdos/educate directory and
+download wordfun1.zip. note to unix users: i have tested this option on a linux
+system using an intel processor. the spellcheck option will not work if the
+system stores the msb of integers first without some changes to the code. also
+note that the format of the nfbtrans dictionary is slightly different than the
+format of the dictionary distributed with wordfun1.zip.
+     sd=n tells nfbtrans the minimum length a word must be to be processed by
+the spellchecker. default is four.
+     si=file specifies the file name nfbtrans uses if input is redirected.
+     for example if you have si=stdin.c in nfbtrans.cnf and issue the command
+nfbtrans <myfile, the file myfile will be treated as if it were a .c file
+because nfbtrans will see the name stdin.c. default is si=stdin.
+     sl=scan_lines default is 10000 specifies the number of lines that will be
+scanned to determine the type of paragraphs used with the ~6 command.
+     sm=stat_mode specifies which statistics are output if the st= option is
+active. all statistics are output by default. bit 0 through 12 can be set
+depending on which sections you want. b0 = date, b1 = file name, b2 =
+translation time, b3 = line length and page length, b4 = words pages words per
+page and characters per second, b5 = pass 2, b6 = estimated embossing time, b7 =
+rejoin information, b8 = hyphenation information, b9 = number of automatic
+lettersigns, b10 = cell and dot information, b11 = length of input/output, and
+b12 = table information. if b13 is set a new statistics file is created for   11
+each session, old data is erased. if b14 is set the version of nfbtrans is
+written to the file.
+     sn=file specifies where the misspelled words are stored, default is
+spell.dic.
+     so=n turns sound off or on. turn sound off if you are annoyed by the beeps
+and clicks. setting b0 turns on the clicks between pages. setting b1 beeps the
+speaker when using the pa= option. setting b2beeps the speaker whenever a write
+to disk fails. setting b3 turns on the sound nfbtrans makes when started. use
+so=15 to enable all sound. pressing space during translation toggles the clicks
+between pages.
+     sp=0/1/2 sets spool mode. output to be embossed is sent to a temporary file
+and then that file is printed with the dos print command. if your printer
+supports it, tell it to ignore formfeeds with s0=. your printer will continue
+ignoring formfeeds until it is powered down or reset because nfbtrans has no way
+of resetting it. it is important that the print command is resident before
+nfbtrans is run. otherwise memory may not be released properly. the temporary
+file is usually placed on your ram disk. use the environment variable tmp or
+temp to tell nfbtrans where to put it, otherwise it goes in your current
+directory. you must have sufficient memory to execute the print command while
+nfbtrans is running. otherwise nfbtrans reports the error and exits. these
+temporary files aren't deleted when printing is complete so its best if they are
+on a ram drive. the files are created from the hour, minute and second 183742
+for example. there is a limit, approximately 9, on the number of files in the
+print queue. so if you run nfbtrans *.* all the files will be stored as the
+temporary files but only the first 9 may be printed. use the syntax nfbtrans
+*.*;n to start embossing at the nth file. use sp=2 to pause for the estimated
+embossing time. press any key to translate the next file immediately. in theory
+this should prevent program from overflowing the print queue. pa= and sp= cannot
+be used at the same time. the last one specified will be the one used.
+     st=filename specifies the name of a file containing statistics about the
+file you just translated. here is an example of a statistics file translating
+this file with comments explaining certain entries:
+ 
+     mon 01/27/97 22:23
+     input file: nfbtrans.fmt prog_init: 8 ;uses the i8 option.
+     translation time: 0 minutes 43 seconds
+     linesperpage: 27
+     linelength: 43
+     words: 13745
+     pages: 67
+     words per page: 205
+     words per second: 319
+     characters per second: 1521
+     pagebreaks: 3 ;blank lines occurred within 3 lines of bottom of page.
+     passes: 2 ;required because there was a table of contents.
+     estimated embossing time: 31 minutes ;assuming 35 characters per second.
+     hyphen searches: 521 ;number of lines containing words 4 or more characters
+long.
+     dash searches: 6 ;words joined with dashes at end of line.
+     hyphen matches: 224 ;words found in dictionary.
+     hyphens used: 144 ;hyphenated words that actually fit on line.
+     dashes used: 3 ;number of dashed words used.
+     hyphens skipped: 0 ;too many consecutive hyphens.
+     auto letter count: 2 ;words like e-mail
+     total cells: 65421
+     total dots: 147171                                                       12
+     dot1: 29369 = 19%
+     dot2: 27392 = 18%
+     dot3: 26963 = 18%
+     dot4: 26826 = 18%
+     dot5: 21767 = 14%
+     dot6: 14854 = 10%
+     dot 7: 1743
+     input file length: 85446
+     output file length: 69201
+     output is 80% of input
+     entries in table: 900
+     bytes in table: 10272
+     if the statistics file already exists, the new output is appended to the
+file.
+     tc=string specifies the two lines of the table of contents header (see bm=
+option). string is a list of six words separated by vertical bars. the first
+three words are for line one and the last three are for line two. the default is
+tc=,title|,pr9t|,brl||,page|,page.
+     td=table_definition defines the format for a table with multiple columns.
+the table definition string follows the same format as the sprintf function
+familiar to c programmers. the table definition string is made from one or more
+field specifiers. a field specifier begins with a percent sign, the field width,
+and a lowercase s. there may be spaces or other characters between field
+specifiers. a negative field width as in %-8s defines a field of eight
+characters that is left justified. a positive field width is right justified. if
+the table definition contains spaces use double or single quotes.
+     the table definition is applied to each input line and the columnized line
+is output. you must use some common sense in the table definition. the sum of
+all the field widths plus any characters must be less than or equal to the page
+width. you can have up to eight fields defined in a table definition. it is
+important that output fields not be larger than the corresponding field
+definition. if you are translating to grade 2 the length of the output field
+could be larger for example when the dollar sign is expanded. lines with page
+numbers can contain a table entry if there is room, otherwise the table will
+continue on the next line.
+     if a column translates to an accent mark, the column is output as spaces.
+if the table is in grade 2, precede the accent with a vertical bar. one use for
+this would be if you want to right justify a five column field on a line width
+of 40 characters. the table definition would be ~-td="%15s%15s%10s" so if you
+want to right justify hello you would immediately follow the table definition
+line with two vertical bar, accent pairs and then hello.
+     example: define a table of four columns all right justified with column 1
+being 5 characters, columns 2 3 and 4 8 characters. the table definition would
+be ~-td=%5s%8s%8s%8s since 5 plus 8 plus 8 plus 8 equals 29, the width of the
+table output is 29 characters. each input line is translated and then output
+according to the field specifiers in the table definition. suppose the input
+line is 23 5.7 6.2 7.8. this line has four fields; the first will be output
+according to the first field specifier which is %5s which means right justified
+in a field of five characters.
+     table output is terminated by a blank line or another table definition.
+(see the file tvfreqs.fmt for an example of how to define a table).
+     te=table_entry allows you to change the replace string for the specified
+entry in the table of translation rules. this option is only allowed during
+translation. the match and replace strings must be separated by a space
+character, otherwise the replace string will be null. for example to change the
+table entry for the left bracket to the grade 2 parenthesis, use the option   13
+te="[ 7" remember to use quotes since the string contains a space. an error is
+generated if the new replace string is longer than the space allocated for the
+original replace string. additional space can be allocated for the replace
+string by modifying the table by adding another vertical bar after the replace
+string followed by an integer. for example 21|[|,7|6 allocates six characters
+for the replace string rather than two.
+     tf=table_file;backtrans_table_file immediately loads the given table
+     file containing translation rules. the back translation table may also be
+specified with a semicolon and the file name. the translation mode in effect
+determines which table will be loaded. the default value for this option is
+tf=braille.tab;back.tab. this option can be used to load different rules for
+different languages. this new table remains in effect until another table is
+loaded. if you plan to translate more than one file using wildcards, the
+original braille.tab file should be reloaded at the end of the file. for example
+you could set up nfbtrans.cnf to load russian.tab every time a .rus file was
+translated. to do this, add rus=9 to an ex= option assuming i9 is not in use.
+then add the line i9=~-tf=russian.tab|~!~-tf=braille.tab| you could also reload
+a default table in nfbtrans.cnf. the table file is assumed to be in the same
+directory as nfbtrans.cnf unless the second character is a colon.
+     tm=translation_mode. tm=1 chooses 1 for the first choice requesting a
+number. tm=21 chooses 1 for the first and 2 for the second input.
+     tn=xy specifies the default number displayed when asked for numeric input.
+     to=toc_format specifies the format string for a toc title default is
+~s2~!~c which skips a line and centers the title.
+     tp=trailing_punctuation specifies characters considered to be trailing
+punctuation when b3 is set in the hm= option. by default comma, colon,
+semicolon, period, exclamation, and question are considered trailing
+punctuation.
+     ts=file specifies a file for storing information about how words are
+translated using the rules supplied in the translation table. this file can get
+very large so this option should only be used when you want to examine how a
+word is translated.
+     tt=start_table_line specifies the line of the input file to start storing
+table information.
+     tv=number sets timing value. only used with nfbasm and microsoft c. on
+faster machines the delay may not be long enough. turbo c automatically takes
+your machine's clock speed into account.
+     uk=0/1 is used in british braille to remove spaces between dashes and
+hyphens between words. the decimal point dots 46 is changed to dot 1.
+     vc=vowels|consonants specifies which characters are vowels and which are
+consonants. this is used only for types 13 through 15. the strings must be
+separated by the vertical bar character. the default vowels include a, e, i, o,
+u plus some extended graphics characters used in the french language.
+     ve=version gives user a warning if the specified version is less than the
+program version. this could be used to indicate the user is using a previous
+version of a table.
+     
+                          part 5: formatting commands
+     the braille translator recognizes several commands that will change its
+actions. the computer differentiates a command from some other character string
+because the command starts with a special character, usually the tilde. the
+command itself is not translated into braille, but instead only modifies the
+action in the program. formatting may be disabled for a given extension using
+the i0 -i9= option. nfbtrans will terminate if an unknown format command is
+encountered. disabling format commands also disables special treatment of ||.
+     for example, you can switch from grade 2 braille output to grade 1       14
+braille output within a document by using the ~1 to indicate grade 1 and then
+the ~2 to indicate grade 2. the translator will go from grade 2 (the default) to
+grade 1 and then back to grade 2. note that the case of the command doesn't
+matter ~a is equivalent to ~a. see the fs= option to change the format
+character.
+     here is a list of the commands and a brief description of their actions:
+     ~a put this word only in grade one: (acronym for national education
+association will look like this: nea; otherwise, it would look like n, or n
+comma.) read braille symbols and contractions section of documentation to
+determine whether there might be a conflict when brailling acronyms.
+     ~b textbook page break in inkprint document: follow the ~b immediately with
+a number to indicate the textbook page. the braille translator will flush any
+translation in progress, insert a line of dots 3 6, and terminate the line with
+the text page number indicated. the indicated print page number prefixed by a
+letter to indicate the relative braille page will be embossed at the top of each
+braille page. the actual braille page number will be embossed in the lower
+right-hand corner of the page. (see the bm=book_mode option described earlier.)
+     ~c centering lines: put centering command in front of word.
+     centering is in effect until a new paragraph is encountered. this could be
+a blank line or one beginning with blanks. nfbtrans automatically breaks lines
+up in to the proper length for centering. you can specify this using the cl=
+option.
+     ~d double spaces braille document: put on a line by itself. this command
+will cause a blank line to appear after each full braille line. use ~d to
+terminate this feature.
+     ~e poetry format: the poetry command can be helpful in translating poems.
+this can be considered the opposite of text format ~t as far as the generated
+braille output is concerned. indented lines of text in the print image file will
+cause the braille output to be written flush against the left margin with
+subsequent braille lines indented two spaces--in other words, a braille hanging
+paragraph. lines not indented in the print image file will cause the braille
+output to be indented two spaces from the left margin. terminate poetry
+formatting by using ~t.
+     ~f table of contents line: (dot 5 fill): this command has several modes of
+operation.
+     if ~f is followed by a letter or punctuation other than plus or minus:
+     set up your table of contents page at the head of the document using zeroes
+for page numbers, and the ~f. for example:
+~fwhat is the national federation of the blind 00
+the ~f will cause the text to be left justified, the page numbers to be right
+justified, and dot 5 fill between them. braille out the document noting the page
+numbers of the actual sections. reedit the document, replacing the zeroes with
+the actual page numbers. finally, braille out the finished version. the
+translator will handle multiple lines if you continue the table of contents line
+in cell one of the following line. for example: ~fall publications and brochures
+distributed by the national federation of the blind, job opportunities for the
+blind, and the american brotherhood for the blind 00 by default, table of
+contents lines are broken at the pagewidth minus seven column. this may be
+changed by placing a colon immediately after the ~f and then the number. for
+example ~f:12 chapter five will cause toc lines to be broken at column 31 width
+pagewidth of 43.
+     you can tell nfbtrans the last word of a table of contents line. doing this
+prevents lines with only guide dots and the last word from being output. words
+starting with a dollar sign or accent at the end of an input line are considered
+to be the last table of contents word. if the word starts with an accent, the
+accent character is removed. if you are making a table with items and         15
+prices using the ~f command, lines will always be output with both item and
+price on a single braille line since the last word on the input line contains a
+dollar sign as the first character.
+     if ~f is followed by digits: you can tell nfbtrans to automatically put the
+correct braille page in your table of contents. you can use this new method for
+creating a table of contents and still use the old method for other types of
+tables. carefully follow these steps:
+     1. place a ~f0 at the beginning of your document. if you want to use the
+pf= or pd= options, the ~f0 must come first. ~f0 tells nfbtrans that two passes
+are required and that your document will be embossed or written to disk on the
+second pass. if the ~f0 is not first, nfbtrans may output lines before it
+determines a second pass is required. this would certainly mess up the format of
+your document when the second pass begins.
+     2. set up the table of contents entries with the ~f followed by a number.
+later on in your document use the ~f followed by that same number to indicate
+that that first entry corresponds to this title. do not put a page number as the
+last word on the first table of contents line, nfbtrans will do that.
+     starting with version 7.44 the matching ~fnn is no longer required if the
+title matches the toc entry. the program stores all toc entries in a file named
+tocfile.$$$. each input line is compared to the first toc entry. if a
+case-insensitive match is found a ~s ~c and ~f followed by the toc number is
+inserted in the input line. the next line is read from the toc file and the
+process is repeated. this method assumes the following: 1. all toc entries are
+in order and none are skipped for example ~f1 ~f2 ... 2. there is a subsequent
+input line that matches the toc line without the ~fnn. 3. you want the toc title
+centered. 4. you want a blank line before the toc title. (see the to= option
+described earlier).
+     following the ~f by a plus sign puts nfbtrans in toc mode. all subsequent
+lines are considered to be toc entries until a ~f- is encountered. the program
+removes any numbers and guide marks from the end of the input line. the
+appropriate ~f is inserted before each input line while this mode is in effect.
+so if you are brailling a document containing a print table of contents, simply
+put a ~f+ before and a ~f- after to completely automate the process. here is an
+example to illustrate:
+     ~f1chapter 1 getting started
+     ~f2introduction
+     ~f3installation
+     ~f4chapter 2
+     ~f5 chapter 3
+     then any time later in your document you could have the line
+     chapter 1
+     then later on after any number of pages you could have the line
+     introduction
+     the program reports an error if there is a ~f1 with no previous ~f0. you
+currently can have up to 250 toc entry/title pairs. if you have a ~f75 entry,
+you must have a matching ~f75 title entry. the program verifies this after pass
+1 is complete. also you cannot have more than two entries with the same number.
+the entries can be in any order as long as there are exactly two entries with
+the same number.
+     the program assumes the first occurrence of ~f14 for example is a toc entry
+and the second ~f14 is on the page corresponding to that entry. note that if you
+emboss a range of pages for example page 5 to 16, the program does a complete
+pass one to do error checking and then outputs the desired pages on pass two.
+     note that ~f0 with no other toc entries can be used to verify that your
+document has no errors before embossing begins.
+     ~g set right margin: put on line by itself. follow this command with a   16
+number.
+     ~h headers: use this command to cause a header at the top of each braille
+page. the header may be up to five lines long. if the next input line begins
+with a ~h, it becomes the second header line and so on. an input line without a
+~h terminates the header definition. the next ~h begins a new header. terminate
+the headers with a ~j or change the header with another ~h. the header line must
+translate to at most a line two characters less than the page width, otherwise
+an error is generated and the program aborts. an error will also occur if the
+header and the page number cannot fit on the first header line.
+     ~i italic sign: in braille, italics replace underlining. if there are three
+words or less underlined, put an italics sign in front of each word. if there
+are four or more words, put two italics before the first word and one italic
+before the last word. use ~i followed by a backslash to turn on italics mode.
+the program outputs two italics before the current word. another ~i backslash
+turns off italics mode and outputs a single italics mark.
+     ~j terminate header: turns off the header feature.
+     ~k terminate footer: turns off footer feature.
+     ~l letter sign: in braille, letters that stand alone are often preceded by
+a letter sign, (dots 5-6). the ~l command is used to generate this symbol. for
+example, a capital b standing alone represents the word, but; c, can, and so on,
+emphasizing the need for a letter sign. put the letter sign before or in a word,
+apartment 3-c.
+     ~m change margin: put on line by itself. follow this immediately with a
+number indicating the column in which the braille left margin should
+begin--normally, column one. it is best to put the margin command on a line by
+itself. the next line will be indented to the declared new margin. for example,
+to change left margin, do ~m03 and to change back, do ~m01 (line return). you
+see margin changes commonly in print to se toff large chunks of quoted material.
+in braille, however, handle such a chunk of information with the same print
+margins as the rest of the text. but separate the chunk from the rest of the
+text by placing a blank line ~s before the material and a ~s blank line after
+the material.
+     a top margin can be specified by following the left margin by a semicolon
+and then an integer. for example ~m1;5 sets the left margin to the default 1 and
+the top margin to 5 meaning braille output will start on line five.
+     ~nn set page number: you may set or reset the page number by including a ~n
+followed immediately by the page number of the next page. default is page 1.
+     ~o indents hanging paragraph: put on line by itself. if there are reasons
+that you would prefer to have a hanging paragraph indented more than two spaces,
+use this command followed by a number such as 5.
+     ~p page command. this command has several modes. if you place ~p as the
+only characters in the word the command will cause the braille embossor to skip
+to the top of the next page. if followed by a letter, ~pa for example, the
+program skips to the top of the next odd numbered page if you are using
+interpoint mode. use this to begin embossing at the top of the next right facing
+page.
+     if followed by a dash ~p- page numbers including roman numerals will not be
+translated to a braille number with a leading number sign. use a plus sign to go
+back to normal braille page numbering.
+     if followed by a number for example ~p4, the program skips to the next page
+if there is a blank line within 4 lines from the bottom of the page. this can be
+used to prevent centered titles and so forth from being printed on the bottom of
+a page. the command is normally given in the beginning of the document and
+remains in effect until another ~p number command is issued. any characters
+placed after the digits will be placed on the first blank line of the page break
+along with the page number. use this method to determine where conditional    17
+page breaks occur.
+     if followed by a colon and a number for example ~p:5 causes a page break if
+the output is within four lines of the bottom of the page. this could be used if
+you have a paragraph you didn't want split on two pages. note that the ~p colon
+command does a ~p0 and then restores the original value at the beginning of the
+next page.
+     ~q clear all tabs: this clears all tabs inserted in the formatted document
+by using the ~v.
+     ~rn:mode make roman numerals: this command makes roman numerals on each
+braille page. default is page i. follow immediately with an integer for a
+starting page other than i. use a colon to specify the type of roman numeral, 0
+indicates preceded by a letter sign and 1 by capitalization marks. for example
+~r5:1 starts at roman page 5 with capital marks. use ~n to switch to arabic.
+     ~s insert a blank line. if followed by a digit for example ~s3 a blank line
+will be inserted only if the program is on at least the third line of the
+braille page. otherwise, the translator will eliminate all blank lines. placing
+an i after the ~s command causes the next line to be indented rather than at the
+left margin.
+     ~t text format: put on line by itself. the text format is the default
+format--that is, the format that the translator uses unless it is told to do
+otherwise. when the translator normally formats text, it forces all indentation
+to the third cell, wraps all overflow to the first cell of the next line, and
+appends following left-justified lines. the program will now treat a blank line
+like a paragraph indent even if the following line is left justified. follow the
+t with an integer to change the indentation.
+     ~u turn off all page numbering: use this command to disable all page
+numbering.
+     ~v set tab: a ~v followed by a column number will set a tab to this
+location. now you may use the ~x to skip to this column.
+     ~w footer line: the footer command will cause a line to emboss at the
+bottom of every page. an error occurs if the translated footer is longer than
+the page width.
+     ~x tab: this command causes a skip to the next tab. if no tabs have been
+specified, the output will skip to a space. if the command is followed by a
+number, the output will skip the number of spaces specified.
+     ~y list format: put on line by itself. this feature keeps information at
+the left margin with runovers of any line followed in the print text by a line
+return being indented two spaces (cell 3). if list items exceed one print line
+in length, the first word of the second line must be preceded by five spaces in
+order to be formatted properly. follow the y with an integer to change
+indentation level.
+     ~z termination command: the termination command inserts a termination sign
+(dot 6 followed by dot 3) into the text wherever it is placed. the termination
+sign in braille is used to indicate the emphasis in a word that is only partly
+underlined or italicized. for example, if you wanted to emphasize the dis in
+dismount: _dis `mount.
+     ~_: causes a hard carriage return beginning a new braille line.
+     ~0 disable all translation: this command causes the program to do no
+translation at all. the output will be what is sometimes called "computer
+braille." the output file will have the same case as the input file. note that
+letters a through z will be lower case, that is, without capital marks. ~01
+produces a modified grade 0 output. i have experimented with 8-dot braille and
+found it takes some getting used to. ~01 is grade 0 with braille capital marks.
+it is more compact than 8 dot braille. this does not conform to any braille code
+i know of but is an alternative to 8 dot braille. it can be used to braille .c,
+.cpp or .h files. it also is useful for brailling unix man pages where the    18
+case of the options is very important. note that an error is reported if you put
+two grade commands on a word. this is because all format commands are processed
+before the word is translated. for example if you had ~0this~!~2 the ~2 would be
+in effect for the whole word.
+     ~1 translate to grade one braille: this command causes grade 1 braille
+output.
+     ~2 translate to grade two braille: this command causes grade two output.
+     ~3 translate to grade three braille: this command causes grade three
+output. you can translate to grade three in stages. an integer grade modifier
+can follow the 3. setting b0 turns on d4, d5, d45 and d456 letter contractions.
+setting b1 enables the d4, d5, d45 and d456 digit contractions. setting b2 turns
+on these contractions for other signs. b3 turns on the single d4, d45 and d5
+suffixes. b4 turns on single cell words. b5 turns on all other contractions. b6
+removes the vowel a from the contracted word. b7 translates the grade 3 numbers
+between 10 and 50. a ~3 by itself sets all these bits and therefore outputs all
+grade 3 contractions.
+     ~4 block mode.
+     ~5 block paragraph, blank line of input causes new braille paragraph.
+     ~6 automatic formatting. the program examines up to the first 1000 lines of
+a file before translation. if the number of blank lines is greater than the
+number of lines starting with four spaces then block paragraphs are assumed.
+     ~7 initiates line paragraph mode. a new paragraph occurs at the end of
+every line. use this mode if your word processor outputs one continuous line for
+each paragraph.
+     ~[ left square bracket [ sends an escape character to the
+     printer. any text after the bracket will also be sent up to the next tilde
+character in the word.
+     ~] right square bracket outputs a centered line of twelve dots 2-5 on the
+next line. braille magazines sometimes use this between articles.
+     ~{ left brace terminates the ~w footer command.
+     ~ right curly brace '}' force inner quotes at any time.
+     ~-xx=string where xx=string is a valid command line or nfbtrans.cnf option.
+for example ~-pl=25 sets page length to 25.
+     ~.extension applies the formatting and options associated with a given
+extension. for example if you are translating a file to grade 2 braille and you
+want to translate a .c program segment, use ~.c and when finished with the c
+segment do a ~~0.fmt. the post_init string is ignored and the format string is
+not changed.
+     ~' forced apostrophe: the forced apostrophe eliminates ambiguity where the
+single quote mark is used. for example, if you had to force an apostrophe in
+vernacular, "|'ave a |'eart, me love."
+     ~# pound sign is used to indicate a comment in the source file to be
+embossed, any remaining characters in the line are ignored.
+     ~! causes the program to ignore any formatting commands occurring later in
+the word.
+     ~backslash i or j followed by an integer are used to store and retrieve
+current page numbers. up to 400 page numbers can be stored. use a negative
+integer to specify a range of pages. for example if you have ~\i4 in your input
+file and then later ~\i-5 and they end up on different braille pages, the
+formatting command ~\j4 would produce a range as in 23-26. this scheme can be
+used to produce an index with the appropriate page numbers. use ~\k followed by
+an integer to retrieve the print print page number if there is one. the ~\i
+command stores both the print and braille page numbers and whether the page
+number is roman numerals or arabic.
+     ~> followed by a character outputs a line of that character, default is
+dash.                                                                         19
+     you can insert any character without translation by preceding it with the
+(bar symbol) character. for example, |,| b|en will prevent the be sign from
+appearing since that is not correct braille usage.
+     to interrupt nfbtrans at a prompt: control scroll lock or break key on your
+keyboard will exit nfbtrans and take you to the c prompt. pressing <esc> during
+output causes program to abort.
+     
+                        part 6: external format language
+     the nfb braille translation program includes an external format language.
+the external format file is created with a word processor. this file is used by
+the translation program to format the file in addition or instead of embedded
+tilde commands. note-all the tilde commands work as they always have. the
+external format language was developed to ease the brailling of standard
+columnar computer reports, but it can be used for many other standard formatting
+tasks. external format language files must have a .efl extension. if the option
+ef=1 is specified the program searches for the .efl file with the same name as
+the file you are translating. if you are translating myfile.txt, myfile.efl is
+processed if it exists. ef=2 tells nfbtrans to abort if myfile.efl is not found.
+add four to the number if you want nfbtrans to output the name of the .efl file
+and the message saying processing is complete. the external format language
+tells the translator how to process a given input file. the file may or may not
+have embedded tilde commands.
+     the external format file is made up of command sets. each command set
+starts with the word line followed by one or two numbers. the first number
+refers to the starting, or only, line, and the second number if present refers
+to the ending line for this command set. the commands in the command set
+following the line command are in effect only for the lines specified. as each
+line is read from the input file, the program checks each line command to
+determine if it applies to the line read. of course, the beginning and ending
+line can be such that all the lines in the text input file can be affected. for
+example,
+     line 1
+9999
+     would cause the program to apply this command set to lines 1 through 9999.
+you can also specify that an efl command applies to all lines by skipping the
+"line" along with the range. for example the single word graphics on an efl line
+applies the command to all lines.
+     the line command must be followed by subcommands that affect braille
+translation as follows:
+     list -- change formatting to list format with hanging indent.
+     text -- change to normal text formatting.
+     center -- center the line when it is brailled.
+     delete -- delete this line entirely.
+     skip -- skip a line.
+     indent -- indent unmatched lines.
+     page # -- set page length of input text.
+     match # # 'ccccc' -- search for match with columns.
+     nmatch # # 'ccccc' -- search for no match with columns.
+     field # # -- define a field.
+     omit -- delete defined field.
+     state -- expand two character state codes.
+     append 'ccccc' -- append character(s) to field.
+     the last three commands, omit, state, and append always follow a field
+command.
+     for instance, to center line two, you might enter a command line in the
+external format language file as follows:                                     20
+     line 2 center
+     you may stack multiple commands. for instance, you could enter
+     line 3 list delete skip
+     which will change the format at line three to list from whatever it may
+have been, delete the line from the braille output, and insert a blank line.
+     the page command has no counterpart in the embedded commands. it is used to
+specify the page length of the source document. if the page is specified as
+zero, the input text file will be treated as a single page no matter how long it
+is. the default page size is 66. the page line counter will be reset every 66
+lines or at the top of page character, whichever comes first.
+     the match command is also unique to the external format language. this
+command makes all the commands that follow it in the command set dependent on a
+matching condition. the program scans the lines specified in the line command
+within the columns specified on the match command for the character string
+following the column specifiers. you may use spaces if the character string is
+enclosed in quotes. the two numbers immediately following the match command
+specify the beginning and ending columns. if there is no match, the program will
+proceed to the next line command. if there is a match, the program will apply
+the following commands in the command set.
+     the indent command is also unique to the external format language. it tells
+the translation program to indent any lines which are not matched, and for which
+a field command is active. this facilitates the creation of subtotal groups in
+financial reports. an example is provided.
+     the field command must be followed by two numbers defining the starting and
+ending columns of a field. this field can be deleted by adding the omit
+subcommand. if the field is a two character state code, you can cause the
+translator to expand it to the full state name by using the state subcommand.
+finally, you can append data to the field by using the append subcommand. most
+often, you will append a delimiter such as a semi-colon or a comma to a field.
+however, you can also use the append command to add any text, even including
+spaces if you use quotes.
+     for example, let us assume a columnar report showing states ranked by
+number of bagpipe-playing tugboat captains. there are three columns: rank, state
+code, and count. we can format the columnar part of the report with a command
+set as follows:
+     line 10 60 field 20 21 state append ; field 1 19 append ;
+     we assume the columns occur from lines 10 through 60, as specified
+following the line command. we ignore the count field since we do not need to
+append a delimiter--the count field is at the end of the line. we tell the
+program to select the field starting at column 20 and ending at column 21,
+translate it to a full state name from a state code, and append a semi-colon.
+then, we tell the program to select a field from column 1 through column 19 and
+append a semi-colon. these field commands are applied from lines 10 through 60.
+note that we start with the rightmost fi/eld. the reason for this is that the
+program processes the commands in order. the field command changes the location
+of the columns to the right. hence, the column alignment is lost. by starting
+with the rightmost field first, columns to the left are still properly aligned.
+always start with the rightmost field. the program verifies that the fields are
+in the proper order and that they don't overlap. the program aborts if it finds
+an error.
+     option option_string can be used to execute a command line option in the
+efl.
+     line line_string can be used to place the input line number in the embossed
+output. the line string will be placed before the line number.
+     graphics graphics_string is used to display the decimal equivalent of
+graphics characters. the graphics string is placed before the number.         21
+     there are three replace commands in the efl. these commands are followed by
+two strings; the first is the search and the second is the replace string which
+may be empty. the search strings are case insensitive.
+     1. repl search replace. this command searches the specified lines. if the
+line contains the search string, the entire line is replaced with the
+replacement string. the line will be deleted if the replacement string is empty.
+for example the .efl line line 1 9999 repl "copyright 1994" "" would delete all
+input lines containing the string "copyright 1994". note that quotes are used
+because the string to be replaced contains a space.
+     2. reps search replacement replaces the search string with the replacement
+string. the string is replaced without regard to word boundaries. for example
+the command line 1 9999 reps "is not" isn't replaces every occurrence of "is
+not" with isn't. place an asterisk after reps to replace all occurrences of the
+string.
+     3. repw search replace. this searches a line for the search string. the
+entire word containing the search string is deleted and the replace string is
+substituted. for example in the rfb dos 6.0 manual headings are indicated by
+heading1, heading2 ... with tildes before the h and after the number. these
+titles could be centered with the command line 1 9999 ~heading ~c. each heading
+specifier will be replaced by ~c which is the nfbtrans centering format command.
+place an asterisk after repsw to act on all words in the line.
+     the word efl command is a special type of word replace command. syntax is
+     word search_string begin_string end_string the search string must match
+     the beginning of a word. if it does, the begin string is inserted at the
+     beginning of the word and the end string is appended to the end. an
+     example will make this clear. the word command can be used to
+     automatically output urls in computer braille. if we assume a url
+     starts with http: then we could use the
+     following efl command to automatically switch to computer braille.
+     word http: " _+" "_: " this would also surround the url with the start and
+stop signs used in braille magazines.
+     the external format language feature is quite powerful, and can save you a
+great deal of editing effort, particularly for columnar reports or frequently
+produced reports in specific formats. for most documents, you will probably find
+it just as easy to continue to use the embedded commands. for computer reports,
+and financial reports, you should consider setting up a efl command file to save
+yourself time and effort.
+ 
+                         part 7: braille considerations
+     you cannot underline in braille - use italics for emphasis.
+     never use the letter l for the number 1.
+     when typing fractions, type 8-1/2 instead of 8 1/2 (there must be a hyphen
+between the whole number and fraction)
+     type the word "times" in mathematical formats. type the word "equal" or
+"equals." type the word "divide" for the division sign. type the word "percent"
+when the percent sign stands alone. never use the number sign. type the word
+"dollar."
+     the translation program ignores empty lines -- use the ~s to skip a line in
+the braille output.
+     a simple way to check that the embossor is working properly is to turn it
+on, start up the computer, and, while you are still at the operating system
+level enter a control-p at the keyboard.
+     this will cause anything you type or the computer displays to be echoed to
+the default list device. since your default list device should be the brailler,
+the characters you type should be echoed to the braille embossor. if they are,
+then everything should be ready for the translator to work. type a            22
+control-p to turn off this echo feature. this technique allows you to determine
+that the path from the operating system to the embossor is working properly.
+     
+                        part 8: changing the translation
+                                     table
+     the table of braille contractions exists in braille.tab and back.tab. it is
+read just prior to file translation. the table gets read again only when
+necessary for example when going from grade two to three or grade three to two
+or when a new table file is specified with the tf= option.
+     a portion of the table appears below:
+     1(bar)afternoon(bar)afn
+     1(bar)afterward(bar)afw
+     1(bar)after(bar)af
+     2(bar)against(bar)ag/
+     2(bar)again(bar)ag
+     1(bar)agreea(bar)agreea
+     each table entry consists of three parts separated by the vertical bar.
+     note that type 17 and 18 entries have four and five parts respectively. the
+first part of an entry is a type indicator, the second part is the match string,
+and the third part is the replacement string. the simplest types are as follows:
+1-replace anytime, 2-replace only if whole word match, and 3-replace if whole
+word or at beginning of word. see the comments in braille.tab and back.tab for a
+complete list of types. note that types 17-18 are defined differently for back
+and normal translation. types 5, 6, 8, 9, 11, 12, 15 and 16 are not defined
+during back translation.
+     the table is stored in alphabetic order with the more specific string ahead
+of the more general string. study the table carefully before you change it. be
+sure you keep the original. improper table entries will produce incorrect
+braille. if errors are found, the program reports the type and line number of
+the error, and then aborts. entries are converted to upper case but must be in
+the proper order. note that an error occurs if there is a null replace string
+i.e. nothing after the last vertical bar. if you really want a null replace
+string, use zero in brackets.
+     every character in the input file must have an entry in the table. for
+example if the pound symbol |# is in the file, it must also be defined in the
+table.
+     graphics and control characters may also be defined in the table. type 28
+indicates a graphics or control character and type 29 indicates an upper case
+graphics character. extended graphics characters may be entered within brackets
+for example
+1|[134][140]b|$ is a valid table entry. graphics characters may also be entered
+directly in the table. graphics characters 128-255 may also have types 1-18.
+characters with type 1-18 are only used in grade 2 or grade 3 braille. if you
+want a graphics character translated in grade 1, it must be type 28 or 29. if
+grade 2 or 3 is in effect, the program will skip passed a type 28 or 29 entry if
+there is another entry for that character. this allows a different translation
+for grade 2. remember that control characters are ignored unless you set kc=1
+and graphics characters are modified unless you set gm=2. graphics characters
+are normally used only in foreign language tables.
+     type 30 is used to place letter signs before uppercase abbreviations if the
+abbreviation is a grade ii word.
+     the output or replace string may also have bracketed entries. for example
+the back.tab table contains the line 3|6|to[32] so the word ! is changed to to
+followed by a space and then the word the. note that the only way to include a
+space in the replace string is to use 32 in brackets.
+     grade 3 is only partially implemented. type entries greater than 32      23
+are for grade 3 and entries less than 0 indicate the entry is not to be used if
+in grade 3.
+     match strings and replace strings can be any length but the line for a
+table entry cannot exceed eighty characters. there can be up to 2000 entries in
+the table. braille.tab currently has 1015 entries and back.tab 729.
+     
+                          part 9: other considerations
+     translate your files from scratch for brailling rather than embossing an
+already existing file. nfbtrans outputs over 1500 characters per second in grade
+2 mode on a 20mhz 386 machine so translation time shouldn't be a problem. one
+possible problem is that this version may format documents slightly differently
+than earlier versions. this means that page 25 may be different between this and
+earlier versions.
+     when embossing an existing file with lineskips = 0, make sure the correct
+lines per page value is in effect. if it isn't, there is no way the program can
+tell what page you are printing.
+     this version of nfbtrans has the ability to translate a grade 2 file back
+into text. the formatting of the text will most likely not be the same as the
+original text. the program automatically removes braille page numbers. (see the
+rp= option). several options have been placed in back.tab to customize nfbtrans
+for back translation. back.tab has been designed to work with the latest
+braille.tab although it should work reasonably well with any grate 2 file.
+formatting should be disabled or set to tilde, otherwise unexpected errors may
+occur. nfbtrans will not output a tilde character with the current braille.tab.
+     the back translation table has been improved to work with blazie
+notetakers. if you write a grade two file while in lowercase mode brackets are
+output as braces, caret as tilde, and backslash as vertical bar. files written
+in lower case are now back translated properly.
+     nfbtrans supports back translation of the braille computer indicator
+symbols such as _+ _: _< _> if present, these symbols ensure the proper back
+translation of electronic addresses and file names. nfbtrans cannot currently
+output these indicators but i'm thinking of adding this ability in a later
+version.
+     i would be interested in hearing from anyone who has compared the back
+translation of nfbtrans and other translation programs. there is plenty of room
+in back.tab for additional entries to improve accuracy. some improvements may
+not be possible unless the code is modified.
+     send all bug reports and any suggested improvements to n8kl@mindspring.com.
+

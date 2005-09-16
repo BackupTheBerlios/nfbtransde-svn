@@ -1,0 +1,12 @@
+Projektdocumentation Cups-->nfbtrans
+- Ausgangssituation
+- Zielsetzung
+- Systemkonfiguration des Druckservers
+= Einrichten des Cups-druckers Elotype als "raw" an com1 des Druckservers
+= nfbtrans als Übersetzungssoftware ASCII --> Kurzschrift
+    = Zuordnen der Regeln der deutschen Kurzschrift zu den Übersetzungsregeln des Programms
+    - erstellen einer Regeldatei für die deutsche Kurzschrift
+    - Testläufe mit nfbtrans
+- einbinden von nfbtrans in das Drucksystem
+- Testläufe mit dem Drucksystem
+- vervollständigen der Dokumentation

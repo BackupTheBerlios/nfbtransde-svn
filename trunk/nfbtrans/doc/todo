@@ -1,0 +1,3 @@
+- enhance handling of german umlauts in translating ascii to braille
+- enhance the braille grade 3 support
+- packaging for several unix flavors for easy install and maintenance

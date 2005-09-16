@@ -1,0 +1,92 @@
+;March 20, 1995
+;format: type|match|replace
+;match strings MUST be in lexical order!
+
+;descriptions of types:
+;1-use anywhere
+;2-must be exact match
+;3-at beginning or all
+;4-only in middle
+;5-joins with same type
+;6-joins next-to,into,by
+;7-not at beginning
+;8-the word BE
+;9-his,was,were,enough
+;10-only at end
+;11 at beginning but not all and not followed by punctuation or number
+;19 number
+;21 Simple Replace
+;22 .
+;24 '
+;25 "
+;26 %
+;27 -
+;28 control or graphics
+
+21|!|6
+25|"|8
+25|"|0
+25|"|,8
+25|"|0'
+21|#|NO4
+26|%|3p
+21|'|'
+21|(|7
+21|)|7
+21|*|9
+21|+|6
+21|,|1
+21|-|-
+21|...|'''
+21|.|4
+21|/|/
+19|0|J
+19|1|A
+19|2|B
+19|3|C
+19|4|D
+19|5|E
+19|6|F
+19|7|G
+19|8|H
+19|9|I
+21|:|3
+21|;|2
+21|<|`{
+21|=|7
+21|>|`o
+21|?|5
+21|@|@
+1|A|A
+1|B|B
+1|C|C
+1|D|D
+1|E|$
+1|F|F
+1|G|G
+1|H|H
+1|I|I
+1|J|T
+1|K|k
+1|L|L
+1|M|M
+1|N|N
+1|O|S
+1|P|P
+1|Q|Q
+1|R|R
+1|S|%
+1|T||
+1|U|!
+1|V|:
+1|W|w
+1|X|X
+1|Y|J
+1|Z|Z
+21|[|7
+21|\|@\
+21|]|7
+21|_|.
+21|`|`
+21|{|8
+21|}|0

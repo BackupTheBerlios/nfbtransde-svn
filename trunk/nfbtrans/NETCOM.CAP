@@ -1,0 +1,106 @@
+
+  Welcome to {COMMO} (tm) 7.0e BETA TEST RELEASE
+  (C)Copyright 1989-1997 Fred P. Brucker
+  All Rights Reserved
+  Serial Number 01149
+
+AT S0=0 S7=180 S11=50 E1 Q0 V1 X4 &C1 &D2
+OK
+ATDT 2614700
+CONNECT 57600
+
+
+netcom login: inge
+Password:
+Last login: Wed Apr 22 11:48:54 from sjx-ca-pm13.netc
+
+                Netcom On-line Communication Services, Inc.
+
+The following Dial-in POPS will be undergoing maintenance or upgrades on the
+following dates and times. Customers may experience loss of connectivity and
+difficulty logging in during the respective dates and times for each POP.
+All maintenance listing's are local time for those POP's.
+
+We thank you for your patience while we upgrade our network to
+better serve you.
+
+San Jose, CA. - April 26, 1998 - 2:00am to 3:00am
+-----------------------------------------------------------------------------
+April 1, 1998: Please be advised - Netcom has announced special UUCP and
+PNC Trade-up programs for UUCP and PNC customers, as Netcom will no longer
+continue to provide UUCP and PNC service effective July 1, 1998.  To receive
+additional information about these promotions please contact Netcom Sales
+at 1-800-638-2661 Monday-Friday, between 6:00am-5:00pm PST, and ask for our
+UUCP and PNC Trade-Up programs. For further details regarding Netcom's plans
+to discontinue this service, please contact our Customer Service department
+at 1-888-316-1122 Monday-Friday, between 6:00am-6:00pm PST.
+
+March 24, 1998: WARNING! The NUGLOPS zip utility (version 2.2) which was
+located at /usr/local/nuglops/bin/zip, can corrupt internal .zip files.
+NUGLOPS has removed the link to this version. For more details see the
+newsgroup netcom.shell.software.nuglops.
+
+March 19, 1998: There is a new number, for the Columbus, Ohio, POP.
+The old number, 614-488-0295, has changed to 614-324-0094.
+Please begin to use the new number as soon as possible.
+The permissive dialing period will end on April 21, 1998.
+
+March 3, 1998: Starting on March 14, 1998, there will be a new area code
+for some POP's in Northern California. The POP's affected are: Walnut Creek
+and Pleasanton. On March 14th, the current area code for these areas, 510,
+will change to 925. For more information, here is a link to PacBell:
+http://www.pacbell.com/about-pb/areacodes/areacodes-510.html.
+The permissive dialing period will end on September 12, 1998.
+
+There is a new area code for the Wellesley, Massachusetts, POP.
+The new area code is: 781.  Please begin to use the new area code as soon
+as possible, as the permissive dialing period will end very soon.
+
+
+***As stated in the Terms & Conditions, Netcom will not be responsible for
+any long distance charges that may be incurred due to these changes.***
+___________________________________________________________________________
+
+NOTE: If you wish to review the Message Of The Day, type "motd" at the
+prompt.
+
+You have mail.
+This disk usage summary is for the last 29 days.
+Your average disk usage to date is    : 3.80 meg
+At this rate, your disk charge will be: $0.00
+{netcom15:2}sz m10s1
+Your account balance is temporarily unavailable.
+
+
+
+Terminal type is vt100
+{netcom15:1}mail
+"/u13/inge/.mailbox/inbox": 10 messages 10 new
+>N  1 listserv@gwmicro.com Fri Apr 24 22:01 1680/64057 gw-info Digest for 24 Apr
+ N  2 LISTSERV@UAFSYSB.UARK.EDU Fri Apr 24 22:07  530/16274 BLIND-L Digest - 23
+Apr 1
+ N  3 LISTSERV@MAELSTROM.STJOHNS.EDU Sat Apr 25 04:00  262/9951  BLINDFAM Digest
+ - 24 Apr
+ N  4 jughead@MEGALINK.NET Sat Apr 25 04:29   27/1106  downloads
+ N  5 tays@PTDPROLOG.NET Sat Apr 25 05:23   35/1488  Re: downloads
+ N  6 kd4sia@EROLS.COM   Sat Apr 25 06:35   30/1527  Kenwood manuals online
+ N  7 jughead@MEGALINK.NET Sat Apr 25 07:50   45/1763  Re: downloads
+ N  8 jughead@MEGALINK.NET Sat Apr 25 10:02   56/2097  Re: downloads
+ N  9 tays@PTDPROLOG.NET Sat Apr 25 10:19   29/1058  Re: downloads
+ N 10 fastpat@ix.netcom.com Sat Apr 25 10:28  193/8640  More on New Jersey State
+
+& s1-10 m10
+"m10" [New file] 2887/108061
+& q
+{netcom15:2}sz m10sz m10
+**B00sz 3.44 02-11-97 finished.
+{netcom15:3}rm m10
+{netcom15:4}rm m10
+rm: m10: No such file or directory
+{netcom15:5}
+{netcom15:5}logout
+
+Connection closed.
+
+NO CARRIER
+

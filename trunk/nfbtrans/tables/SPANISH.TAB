@@ -1,0 +1,111 @@
+;April 17, 1995
+;format: type|match|replace
+;match strings MUST be in lexical order!
+
+;descriptions of types:
+;1-use anywhere
+;2-must be exact match
+;3-at beginning or all
+;4-only in middle
+;5-joins with same type
+;6-joins next-to,into,by
+;7-not at beginning
+;8-the word BE
+;9-his,was,were,enough
+;10-only at end
+;11 at beginning but not all and not followed by punctuation or number
+;19 number
+;21 Simple Replace
+;22 .
+;24 '
+;25 "
+;26 %
+;27 -
+;28 control or graphics
+
+gm=2
+ca=.|.
+it=9|9
+rw=8
+21|!|6
+25|"|8
+25|"|8
+25|"|,8
+25|"|,8
+21|#|NO4
+21|$|4
+26|%|#j0
+21|'|'
+21|(|<
+21|)|>
+21|*|9
+21|+|6
+21|,|1
+21|-|-
+21|...|'''
+21|.|'
+21|/|/
+19|0|J
+19|1|A
+19|2|B
+19|3|C
+19|4|D
+19|5|E
+19|6|F
+19|7|G
+19|8|H
+19|9|I
+21|:|3
+21|;|2
+21|<|`{
+21|=|7
+21|>|`o
+21|?|5
+21|@|@
+1|A|A
+1|B|B
+1|C|C
+1|D|D
+1|E|E
+1|F|F
+1|G|G
+1|H|H
+1|I|I
+1|J|J
+1|K|K
+1|L|L
+1|M|M
+1|N|N
+1|O|O
+1|P|P
+1|Q|Q
+1|R|R
+1|S|S
+1|T|T
+1|U|U
+1|V|V
+1|W|W
+1|X|X
+1|Y|Y
+1|Z|Z
+21|[|<
+21|\|@\
+21|]|)
+21|_|.
+21|`|`
+21|{|8
+21|}|8
+28|[129]||
+28|[130]|!
+29|[144]|!
+29|[154]||
+28|[160]|(
+28|[161]|/
+28|[162]|+
+28|[163]|)
+28|[164]|}
+29|[165]|}
+29|[181]|(
+29|[214]|/
+29|[224]|+
+29|[233]|)
