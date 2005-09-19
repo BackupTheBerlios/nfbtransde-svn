@@ -77,4 +77,12 @@ lowercase:
 
 clean:
 	rm -f $(OBJFILES) nfbtrans
-
+install:
+	install -m 755 nfbtrans /usr/local/bin
+	install tables/german2.tab /usr/local/lib/braille.tab
+	install tables/back.tab /usr/local/lib
+	install dict/english.dic /usr/local/lib
+	install nfbtrans.cnf /usr/local/lib
+	install spell.dat /usr/local/lib
+	rm *.o nfbtrans
+	
